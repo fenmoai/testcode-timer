@@ -31,12 +31,19 @@ export async function getRows(sheetName: string): Promise<string[][]> {
     if (!sheetId) throw new Error('GOOGLE_SHEET_ID is not defined');
 
     const sheets = await getSheetsClient();
+    try {
     const response = await sheets.spreadsheets.values.get({
-        spreadsheetId: sheetId,
-        range: sheetName,
+      spreadsheetId: sheetId,
+      range: sheetName,
     });
-
     return response.data.values || [];
+  } catch (error: any) {
+    console.error(`Error reading sheet "${sheetName}" from spreadsheet "${sheetId}":`, error.message);
+    if (error.code === 404) {
+      throw new Error(`Google Sheet not found. Please check GOOGLE_SHEET_ID ('${sheetId}') and TESTCODES_SHEET_NAME ('${sheetName}'). Ensure the sheet tab name matches exactly.`);
+    }
+    throw error;
+  }
 }
 
 /**
