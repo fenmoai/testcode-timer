@@ -48,6 +48,7 @@ export async function POST(request: Request) {
 
     } catch (error: any) {
         console.error('Submission API Error:', error);
-        return NextResponse.json({ error: error.message || 'Internal Server Error' }, { status: 500 });
+        // Do not expose internal IDs or upstream error messages to the client
+        return NextResponse.json({ error: 'Failed to process submission. Please contact support.' }, { status: 500 });
     }
 }

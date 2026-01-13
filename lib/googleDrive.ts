@@ -19,6 +19,14 @@ export async function uploadFile(
         throw new Error('DRIVE_FOLDER_ID is not defined');
     }
 
+    try {
+        const creds = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_JSON || '{}');
+        console.log('Attempting upload with Service Account:', creds.client_email);
+        console.log('Target Folder ID:', folderId);
+    } catch (e) {
+        console.warn('Could not parse service account JSON for logging');
+    }
+
     const fileMetadata = {
         name: fileName,
         parents: [folderId],
