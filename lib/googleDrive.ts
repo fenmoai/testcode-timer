@@ -23,8 +23,24 @@ export async function uploadFile(
         const creds = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_JSON || '{}');
         console.log('Attempting upload with Service Account:', creds.client_email);
         console.log('Target Folder ID:', folderId);
-    } catch (e) {
-        console.warn('Could not parse service account JSON for logging');
+
+        // Verify folder access
+        try {
+            await drive.files.get({
+                fileId: folderId,
+                fields: 'id, name',
+                supportsAllDrives: true
+            });
+            console.log('Successfully accessed target folder.');
+        } catch (err: any) {
+            console.error('VERIFICATION FAILED: Service account cannot access the folder.', err.message);
+            throw new Error('Unable to access the configured upload folder.');
+        }
+
+    } catch (e: any) {
+        // If it was our custom error, rethrow it
+        if (e.message.startsWith('Service account')) throw e;
+        console.warn('Could not parse service account JSON for logging or verification failed', e);
     }
 
     const fileMetadata = {
@@ -41,6 +57,7 @@ export async function uploadFile(
         requestBody: fileMetadata,
         media: media,
         fields: 'id, webViewLink',
+        supportsAllDrives: true,
     });
 
     return response.data.webViewLink || '';
