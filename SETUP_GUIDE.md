@@ -96,6 +96,10 @@ The name of the tab at the bottom of your sheet (e.g., `Sheet1` or rename to `Te
 
 The name of the tab receiving form responses (e.g., `Form Responses 1`).
 
+### `DRIVE_FOLDER_ID`
+
+The ID of the Google Drive folder where submission images will be uploaded. See Section 7 for details.
+
 ---
 
 ## Summary of Permissions
@@ -126,3 +130,15 @@ The name of the tab receiving form responses (e.g., `Form Responses 1`).
    `https://docs.google.com/forms/d/e/1FAIpQLSf.../viewform?usp=pp_url&entry.123456=__TESTCODE__`
 6. Paste this full URL into the `FormUrlTemplate` column in your sheet.
    * *Example in Sheet*: `https://docs.google.com/forms/d/e/1FAIpQLSf.../viewform?usp=pp_url&entry.123456=__TESTCODE__`
+
+### How to get `DRIVE_FOLDER_ID` (For Image Uploads)
+
+1. Go to Google Drive and create a **New Folder** (e.g., `TestCode Submissions`).
+2. **Share this folder**:
+   * Right-click > Share.
+   * Add the **Service Account Email**.
+   * Set permission to **Editor** (It needs to upload files).
+3. Open the folder.
+4. Look at the URL: `https://drive.google.com/drive/folders/12345abcde_FolderID_xyz`
+5. Copy the ID part: **`12345abcde_FolderID_xyz`**.
+6. Add this to your `.env.local`: `DRIVE_FOLDER_ID='12345abcde_FolderID_xyz'`

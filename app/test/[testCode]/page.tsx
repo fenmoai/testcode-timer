@@ -2,6 +2,7 @@
 import { getTestCodeState, hasSubmitted } from '@/lib/testCodes';
 import PreStartScreen from '@/components/PreStartScreen';
 import RunningScreen from '@/components/RunningScreen';
+import SubmissionForm from '@/components/SubmissionForm';
 
 // We disable caching for this page to ensure fresh state on reload
 export const dynamic = 'force-dynamic';
@@ -62,22 +63,7 @@ export default async function TestPage({ params }: { params: Promise<{ testCode:
     }
 
     // Not submitted yet
-    const formUrl = state.formUrlTemplate.replace('__TESTCODE__', state.testCode);
-
     return (
-        <main className="flex flex-col h-screen items-center justify-center text-gray-900 bg-gray-50 p-4">
-            <div className="bg-yellow-50 p-8 border border-yellow-200 rounded-lg text-center shadow-sm max-w-lg">
-                <h1 className="text-2xl font-bold text-red-600 mb-6">The test time is over.</h1>
-                <p className="mb-6 text-gray-700">Please submit your answers now.</p>
-                <a
-                    href={formUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-block bg-blue-600 hover:bg-blue-800 text-white font-bold py-3 px-8 rounded text-lg transition-colors"
-                >
-                    Open submission form
-                </a>
-            </div>
-        </main>
+        <SubmissionForm testCode={state.testCode} />
     );
 }
