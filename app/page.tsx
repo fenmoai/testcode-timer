@@ -42,7 +42,7 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-gray-50 text-gray-900">
       <div className="z-10 max-w-md w-full items-center justify-between font-mono text-sm">
-        <h1 className="text-4xl font-bold text-center mb-8">TestCode Timer</h1>
+        <h1 className="text-4xl font-bold text-center mb-8">{process.env.NEXT_PUBLIC_TITLE || 'TestCode Timer'}</h1>
 
         <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
           <div className="mb-4">
