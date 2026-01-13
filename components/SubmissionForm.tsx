@@ -13,6 +13,7 @@ export default function SubmissionForm({ testCode }: SubmissionFormProps) {
     const [link2, setLink2] = useState('');
     const [file, setFile] = useState<File | null>(null);
     const [uploading, setUploading] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(false);
     const [error, setError] = useState('');
     const router = useRouter();
 
@@ -40,6 +41,7 @@ export default function SubmissionForm({ testCode }: SubmissionFormProps) {
             const data = await res.json();
 
             if (res.ok) {
+                setIsSuccess(true);
                 router.refresh();
                 // Do NOT set uploading to false here, to prevent double submission during refresh
             } else {
@@ -156,9 +158,9 @@ export default function SubmissionForm({ testCode }: SubmissionFormProps) {
                     <button
                         className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-4 rounded-lg shadow-md focus:outline-none focus:ring-4 focus:ring-blue-300 transition-all disabled:opacity-50 disabled:cursor-not-allowed text-lg"
                         type="submit"
-                        disabled={uploading}
+                        disabled={uploading || isSuccess}
                     >
-                        {uploading ? 'Submitting...' : 'Submit Answers'}
+                        {uploading || isSuccess ? 'Submitting...' : 'Submit Answers'}
                     </button>
                 </form>
             </div>
