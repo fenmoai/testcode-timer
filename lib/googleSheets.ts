@@ -78,6 +78,7 @@ export async function appendRow(sheetName: string, values: string[]) {
         spreadsheetId: sheetId,
         range: sheetName,
         valueInputOption: 'USER_ENTERED',
+        insertDataOption: 'INSERT_ROWS',
         requestBody: {
             values: [values],
         },
