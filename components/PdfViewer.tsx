@@ -5,8 +5,8 @@ interface PdfViewerProps {
 }
 
 export default function PdfViewer({ fileId }: PdfViewerProps) {
-    // Use Google Drive viewer in embedded mode
-    const src = `https://docs.google.com/viewer?srcid=${fileId}&pid=explorer&efh=false&a=v&chrome=false&embedded=true`;
+    // Use modern Google Drive preview URL
+    const src = `https://drive.google.com/file/d/${fileId}/preview`;
 
     return (
         <div className="w-full h-full min-h-[600px] border border-gray-300 rounded-lg overflow-hidden">
