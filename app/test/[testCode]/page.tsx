@@ -56,16 +56,6 @@ export default async function TestPage({ params }: { params: Promise<{ testCode:
                 <div className="bg-white p-8 rounded-lg shadow-md max-w-lg text-center">
                     <h1 className="text-3xl font-bold text-green-600 mb-4">Test Completed</h1>
                     <p className="text-lg text-gray-700">Your responses have already been submitted. Thank you.</p>
-                    <div className="mt-8 border-t pt-8">
-                        <p className="text-sm text-gray-500 mb-2">Reference Problem:</p>
-                        <div className="h-64 overflow-hidden border">
-                            <iframe
-                                src={`https://docs.google.com/viewer?srcid=${state.problemPdfId}&pid=explorer&efh=false&a=v&chrome=false&embedded=true`}
-                                className="w-full h-full border rounded"
-                                title="Problem Statement"
-                            />
-                        </div>
-                    </div>
                 </div>
             </main>
         );
@@ -75,24 +65,18 @@ export default async function TestPage({ params }: { params: Promise<{ testCode:
     const formUrl = state.formUrlTemplate.replace('__TESTCODE__', state.testCode);
 
     return (
-        <main className="flex flex-col h-screen text-gray-900 bg-gray-50">
-            <div className="bg-yellow-50 p-4 border-b border-yellow-200 text-center shadow-sm z-10">
-                <h1 className="text-xl font-bold text-red-600 mb-2">The test time is over. Please submit your answers now.</h1>
+        <main className="flex flex-col h-screen items-center justify-center text-gray-900 bg-gray-50 p-4">
+            <div className="bg-yellow-50 p-8 border border-yellow-200 rounded-lg text-center shadow-sm max-w-lg">
+                <h1 className="text-2xl font-bold text-red-600 mb-6">The test time is over.</h1>
+                <p className="mb-6 text-gray-700">Please submit your answers now.</p>
                 <a
                     href={formUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-block bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-6 rounded"
+                    className="inline-block bg-blue-600 hover:bg-blue-800 text-white font-bold py-3 px-8 rounded text-lg transition-colors"
                 >
                     Open submission form
                 </a>
-            </div>
-            <div className="flex-1 p-4">
-                <iframe
-                    src={`https://docs.google.com/viewer?srcid=${state.problemPdfId}&pid=explorer&efh=false&a=v&chrome=false&embedded=true`}
-                    className="w-full h-full border rounded"
-                    title="Problem Statement"
-                />
             </div>
         </main>
     );
