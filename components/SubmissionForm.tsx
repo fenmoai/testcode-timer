@@ -124,7 +124,7 @@ export default function SubmissionForm({ testCode }: SubmissionFormProps) {
 
                     <div>
                         <label className="block text-gray-800 text-base font-semibold mb-2" htmlFor="link2">
-                            Live deployment link <span className="text-red-600">*</span>
+                            Live deployment link <span className="text-gray-400 font-normal text-sm">(Optional)</span>
                         </label>
                         <input
                             className="appearance-none block w-full bg-gray-50 text-gray-700 border border-gray-300 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-blue-500 transition-colors"
@@ -133,7 +133,6 @@ export default function SubmissionForm({ testCode }: SubmissionFormProps) {
                             placeholder="https://project.vercel.app"
                             value={link2}
                             onChange={(e) => setLink2(e.target.value)}
-                            required
                         />
                     </div>
 
