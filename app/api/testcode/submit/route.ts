@@ -13,7 +13,7 @@ export async function POST(request: Request) {
         const link2 = formData.get('link2') as string;
         const file = formData.get('file') as File | null;
 
-        if (!testCode || !file) {
+        if (!testCode || !file || !link1) {
             return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
         }
 

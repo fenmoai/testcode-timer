@@ -40,6 +40,7 @@ export default async function TestPage({ params }: { params: Promise<{ testCode:
     if (remaining > 0) {
         return (
             <RunningScreen
+                testCode={state.testCode}
                 startTime={state.startTime}
                 durationHours={state.durationHours}
                 problemPdfId={state.problemPdfId}
