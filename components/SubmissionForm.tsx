@@ -41,12 +41,13 @@ export default function SubmissionForm({ testCode }: SubmissionFormProps) {
 
             if (res.ok) {
                 router.refresh();
+                // Do NOT set uploading to false here, to prevent double submission during refresh
             } else {
                 setError(data.error || 'Submission failed');
+                setUploading(false);
             }
         } catch (e) {
             setError('Network error occurred.');
-        } finally {
             setUploading(false);
         }
     };

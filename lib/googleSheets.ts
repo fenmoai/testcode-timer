@@ -72,6 +72,8 @@ export async function appendRow(sheetName: string, values: string[]) {
 
     const sheets = await getSheetsClient();
 
+    console.log(`[appendRow] Appending to ${sheetName}. Values:`, JSON.stringify(values));
+
     await sheets.spreadsheets.values.append({
         spreadsheetId: sheetId,
         range: sheetName,

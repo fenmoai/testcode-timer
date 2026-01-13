@@ -41,6 +41,7 @@ export async function POST(request: Request) {
         // Columns: Timestamp, Public GitHub Repo, Live Deployment, Screenshot (Drive Link), TestCode
         const now = new Date().toISOString();
         const rowValues = [now, link1 || '', link2 || '', driveLink, testCode];
+        console.log('[API] Prepared Row Values:', JSON.stringify(rowValues));
 
         await appendRow(FORM_RESPONSES_SHEET, rowValues);
 
