@@ -98,7 +98,7 @@ export default function SubmissionForm({ testCode }: SubmissionFormProps) {
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="bg-gray-100 p-4 rounded mb-6">
                         <label className="block text-gray-600 text-xs font-bold uppercase tracking-wide mb-1">
-                            Test Code (Read Only)
+                            Test Code
                         </label>
                         <input
                             type="text"
