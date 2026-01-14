@@ -9,12 +9,21 @@ export async function POST(request: Request) {
     try {
         const formData = await request.formData();
         const testCode = formData.get('testCode') as string;
+        const fullName = formData.get('fullName') as string;
+        const email = formData.get('email') as string;
+        const phone = formData.get('phone') as string;
         const link1 = formData.get('link1') as string;
         const link2 = formData.get('link2') as string;
         const file = formData.get('file') as File | null;
 
-        if (!testCode || !file || !link1) {
+        if (!testCode || !file || !link1 || !fullName || !email || !phone) {
             return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+        }
+
+        // Basic phone validation on server side as well
+        const phoneRegex = /^(\+91[\-\s]?)?[6789]\d{9}$/;
+        if (!phoneRegex.test(phone)) {
+            return NextResponse.json({ error: 'Invalid phone number format' }, { status: 400 });
         }
 
         // 1. Validation
@@ -38,9 +47,9 @@ export async function POST(request: Request) {
         const driveLink = await uploadFile(fileName, file.type, buffer);
 
         // 3. Append to Sheets
-        // Columns: Timestamp, Public GitHub Repo, Live Deployment, Screenshot (Drive Link), TestCode
+        // Columns: Timestamp, Public GitHub Repo, Live Deployment, Screenshot (Drive Link), TestCode, Full Name, Email, Phone
         const now = new Date().toISOString();
-        const rowValues = [now, link1 || '', link2 || '', driveLink, testCode];
+        const rowValues = [now, link1 || '', link2 || '', driveLink, testCode, fullName, email, phone];
         console.log('[API] Prepared Row Values:', JSON.stringify(rowValues));
 
         await appendRow(FORM_RESPONSES_SHEET, rowValues);

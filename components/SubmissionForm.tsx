@@ -9,6 +9,9 @@ interface SubmissionFormProps {
 }
 
 export default function SubmissionForm({ testCode }: SubmissionFormProps) {
+    const [fullName, setFullName] = useState('');
+    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
     const [link1, setLink1] = useState('');
     const [link2, setLink2] = useState('');
     const [file, setFile] = useState<File | null>(null);
@@ -19,6 +22,14 @@ export default function SubmissionForm({ testCode }: SubmissionFormProps) {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        // Basic Phone Validation (Indian numbers)
+        const phoneRegex = /^(\+91[\-\s]?)?[6789]\d{9}$/;
+        if (!phoneRegex.test(phone)) {
+            setError('Please enter a valid Indian phone number.');
+            return;
+        }
+
         if (!file) {
             setError('Please upload the proof image.');
             return;
@@ -29,6 +40,9 @@ export default function SubmissionForm({ testCode }: SubmissionFormProps) {
         try {
             const formData = new FormData();
             formData.append('testCode', testCode);
+            formData.append('fullName', fullName);
+            formData.append('email', email);
+            formData.append('phone', phone);
             formData.append('link1', link1);
             formData.append('link2', link2);
             formData.append('file', file);
@@ -108,6 +122,52 @@ export default function SubmissionForm({ testCode }: SubmissionFormProps) {
                             value={testCode}
                             disabled
                             className="w-full bg-transparent text-lg font-mono font-bold text-gray-700 focus:outline-none"
+                        />
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label className="block text-gray-800 text-base font-semibold mb-2" htmlFor="fullName">
+                                Full Name <span className="text-red-600">*</span>
+                            </label>
+                            <input
+                                className="appearance-none block w-full bg-gray-50 text-gray-700 border border-gray-300 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-blue-500 transition-colors"
+                                id="fullName"
+                                type="text"
+                                placeholder="John Doe"
+                                value={fullName}
+                                onChange={(e) => setFullName(e.target.value)}
+                                required
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-gray-800 text-base font-semibold mb-2" htmlFor="phone">
+                                Phone Number <span className="text-red-600">*</span>
+                            </label>
+                            <input
+                                className="appearance-none block w-full bg-gray-50 text-gray-700 border border-gray-300 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-blue-500 transition-colors"
+                                id="phone"
+                                type="tel"
+                                placeholder="+91 9876543210"
+                                value={phone}
+                                onChange={(e) => setPhone(e.target.value)}
+                                required
+                            />
+                        </div>
+                    </div>
+
+                    <div>
+                        <label className="block text-gray-800 text-base font-semibold mb-2" htmlFor="email">
+                            Email Address <span className="text-red-600">*</span>
+                        </label>
+                        <input
+                            className="appearance-none block w-full bg-gray-50 text-gray-700 border border-gray-300 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-blue-500 transition-colors"
+                            id="email"
+                            type="email"
+                            placeholder="john@example.com"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
                         />
                     </div>
 
